@@ -1,0 +1,16 @@
+{% extends "generic.html" %}
+
+{% block content %}
+  <h1>List of Registrants</h1>
+  {% if registrant_list %}
+    {{registrant_list|length}}
+    <ul>
+      {% for regist in registrant_list %}
+	<li>{{regist.name}} - <a href="{{regist.get_adventure_url}}">{{regist.get_adventure}}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no registrants</p>
+  {% endif %}
+{% endblock %}
+

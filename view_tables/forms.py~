@@ -1,0 +1,22 @@
+from django import forms
+
+from django import forms
+from django.core.exceptions import ValidaationError
+from django.utils.translation import ugettext_lazy as _
+
+
+
+class registerToAdventureForm(forms.Form):
+    player = forms.TextField(help_text="What is your name?")
+    adventure = forms.TextField(help_text="Which adventure do you want to play?")
+
+    def clean_player_name(self):
+        data = self.cleaned_data['player']
+
+        #check if player name is not empty
+        if data.strip == '':
+            raise ValidaationError(_('Plesae provide a player name'))
+
+        return data
+
+

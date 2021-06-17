@@ -1,0 +1,11 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('',views.index, name='index'),
+    path('adventures',views.AdventureListView.as_view(),name='adventures'),
+    path('adventure/<int:pk>', views.adventureDetailView.as_view(),name='adventure-detail'),
+    path('registrants',views.RegistrantListView.as_view(),name='registrants'),    
+    ]
+
+

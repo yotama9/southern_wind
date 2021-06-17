@@ -1,0 +1,23 @@
+{% extends "generic.html" %}
+
+{% block content %}
+  <h1>{{adventure.title}}</h1>
+  <p><strong>DM: </strong>{{adventure.dm_name}}</p>
+  <p><strong>Teaser: </strong>{{adventure.teaser}}</p>
+  <p><strong>D&D5 ? </strong>{{adventure.is_dnd5}}</p>
+  <p><strong>Min level: </strong>{{adventure.min_level}}</p>
+  <p><strong>Max level: </strong>{{adventure.max_level}}</p>
+  <p><strong>Max number of players: </strong>{{adventure.max_number_of_players}}</p>
+  <p><strong>Date:</strong>{{adventure.date}}</p>
+
+  {% for registrant in adventure.registrant_set.all %}
+    <hr>
+    <p>{{registrant.name}}</p>
+  {% endfor %}
+{% endblock %}
+
+
+
+
+
+  

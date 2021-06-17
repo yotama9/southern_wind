@@ -1,0 +1,31 @@
+{% extends "generic.html" %}
+
+{% block content %}
+  <h1>Register to table</h1>
+
+  <h2>Available tables</h1>
+  <br>
+  <br>
+  <table></tbody>
+    {% for adventure in adventure_list %}
+      <h3> {{ adventure.title }}
+      </h3>
+      <p>
+      	{% if adventure.is_dnd5 %}
+	  D&amp;D5 adventure (levels {{ adventure.min_level }} - {{ adventure.max_level }})
+	{% endif %}
+      </p>
+      {{ adventure.teaser }}
+      <hr>
+    {% endfor %}
+  </tbody></table>
+
+  <form action="" method="post">
+    <h2>Select your table</h2>
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit">
+  </from>
+{% endblock %}

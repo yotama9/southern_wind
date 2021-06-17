@@ -1,0 +1,45 @@
+from django import forms
+
+from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
+from view_tables.models import Adventure
+
+import datetime
+
+
+class registerToAdventureForm(forms.Form):
+    player = forms.CharField(help_text="What is your name?")
+    #getting all adventures
+
+    for a in Adventure.objects.all():
+        print (dir(a))
+    choices = ((a.pk,a.title) for a in Adventure.objects.all())
+
+    
+    adventure = forms.ChoiceField(help_text="Which adventure do you want to play?",choices =choices)
+
+    def clean_player(self):
+        data = self.cleaned_data['player']
+
+        #check if player name is not empty
+        if data.strip() == '':
+            raise ValidationError(_('Plesae provide a player name'))
+
+        return data
+
+
+
+
+class createATable(form.Form):
+    title = forms.CharField(max_length=200,help_text='Please enter the adventure\'s title')
+    dm_name = forms.CharField(max_length=200,help_text='Please enter your name or a display name')
+    teaser = forms.TextField(max_length=2000,help_text='Please enter the teaser for the adventure')
+    is_dnd5 = forms.BooleanField(help_text='Is this a D&D5 adventure?')
+    min_level = forms.IntegerField(help_text='What is the minimum character level for this adventure?')
+    max_level = forms.IntegerField(help_text='What is the maximum character level for this adventure?')
+    max_number_of_players = models.IntegerField(help_text='Total numbers of players you are willing to host',default=5)    
+    date = models.DateField()
+
+    def clean(self):
+        title =b self

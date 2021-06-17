@@ -1,0 +1,18 @@
+{% extends "generic.html" %}
+
+{% block content %}
+  <h1>Available adventures</h1>
+  {% if adventure_list %}
+    <ul>
+      {% for adventure in adventure_list %}
+	<li>
+	  <a href="{{ adventure.get_absolute_url }}">{{ adventure.title }}</a> ({{adventure.dm_name}})
+	</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No adventures </p>
+  {% endif %}
+{% endblock %}
+
+
