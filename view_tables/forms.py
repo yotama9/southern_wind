@@ -36,6 +36,7 @@ class registerToAdventureForm(forms.Form):
         return data
 
 
+    
 class CreateTableForm(ModelForm):
     class Meta:
         model = Adventure
@@ -51,9 +52,8 @@ class CreateTableForm(ModelForm):
         widgets = {
             'date':DatePickerInput(
                 options={
-                    "format": "dd/mm/yyyy",
-                    "autoclose": True
-                }
+                    "format": "DD/MM/YYYY",
+                },
             )
         }
 
