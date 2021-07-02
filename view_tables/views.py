@@ -3,6 +3,9 @@ from view_tables.models import Adventure, Registrant, get_available_tables
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.models import Permission
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import permission_required
 import datetime
 
 from view_tables.forms import registerToAdventureForm, CreateTableForm
@@ -41,7 +44,6 @@ class RegistrantListView(generic.ListView):
 
 
 def register_to_table(request):
-
     #if this is a POST request ten process the form data
     if request.method == 'POST':
         # a form instance and populate it with data from the request (binding):
@@ -75,7 +77,7 @@ def register_to_table(request):
 
                    
 
-
+@permission_required('view_tables.add_adventure')
 def create_adventure(request):
     """View fucntion for creating a table"""
 
