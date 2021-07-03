@@ -9,8 +9,8 @@ class Adventure(models.Model):
     dm_name = models.CharField(max_length=200,help_text='Please enter your name or a display name')
     teaser = models.TextField(max_length=2000,help_text='Please enter the teaser for the adventure')
     is_dnd5 = models.BooleanField(help_text='Is this a D&D5 adventure?')
-    min_level = models.IntegerField(help_text='What is the minimum character level for this adventure?')
-    max_level = models.IntegerField(help_text='What is the maximum character level for this adventure?')
+    min_level = models.IntegerField(help_text='What is the minimum character level for this adventure?',null=True,blank=True)
+    max_level = models.IntegerField(help_text='What is the maximum character level for this adventure?',null=True,blank=True)
     max_number_of_players = models.IntegerField(help_text='Total numbers of players you are willing to host')    
     evening = models.ForeignKey("Evening",help_text="what is the relevant evening?",on_delete=models.SET_NULL,null=True)
 

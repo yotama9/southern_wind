@@ -149,7 +149,7 @@ def create_adventure(request):
                                   evening=evening)
             adventure.save()
 
-            return HttpResponseRedirect(reverse('adventures'))
+            return HttpResponseRedirect(reverse('show-evenings'))
         
         else: #the form is not validated. 
             context = {

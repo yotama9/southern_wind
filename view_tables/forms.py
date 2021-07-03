@@ -63,6 +63,7 @@ class CreateTableForm(ModelForm):
                   'evening',]
 
     def clean(self):
+        print('clean')
         _title = self.cleaned_data['title']
         if _title.strip() == '':
             raise ValidationError(_('Please provide a title to the adventure'))
