@@ -1,0 +1,17 @@
+{% extends "generic.html" %}
+
+{% block content %}
+  <h1>Tables {{ date }}</h1>
+  <ul>
+    {% for table,regs in tables.items %}
+      <li>
+	<a href="{{ table.get_absolute_url }}">{{ table.title }}</a> ({{table.dm_name}})
+      </li>
+      {% for r in regs %}
+	<ul>
+	  <il>{{ r.name }}</il>
+	</ul>
+      {% endfor %}
+    {% endfor %}
+  </ul>
+{% endblock %}

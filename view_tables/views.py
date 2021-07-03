@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from view_tables.models import Adventure, Registrant, get_available_tables, Evening
+from view_tables.models import Adventure, Registrant, Evening
+from view_tables.models import get_tables_for_evening, get_available_tables
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -7,6 +8,7 @@ from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 import datetime
+from datetime import timedelta
 
 from view_tables.forms import registerToAdventureForm, CreateTableForm, CreateEveningForm
 
@@ -23,6 +25,7 @@ def index(request):
     }
 
     #render the HTML template index.html
+        
     return render (request, 'index.html', context=context)
 
 
@@ -35,7 +38,7 @@ class adventureDetailView(generic.DetailView):
 def adventure_detail_view(request,primary_key):
     try:
         adventure = Adventure.objects.get(pk=primary_key)
-    except Book.DoesNotExist:
+    except Adventure.DoesNotExist:
         raise Http404('Adventure does not exist')
 
 class RegistrantListView(generic.ListView):
@@ -69,6 +72,7 @@ def register_to_table(request):
         form = registerToAdventureForm()
 
         adventures = get_available_tables()
+        print(adventures)
 
         context = {'form':form,'adventure_list':adventures}
 
@@ -103,11 +107,6 @@ def create_evening(request):
         return render(request,'view_tables/create_evening.html',context=context)
         
         
-            
-
-        
-                   
-
 @permission_required('view_tables.add_adventure')
 def create_adventure(request):
     """View fucntion for creating a table"""
@@ -138,7 +137,7 @@ def create_adventure(request):
             min_level = form.cleaned_data['min_level']
             max_level = form.cleaned_data['max_level']
             max_number_of_players = form.cleaned_data['max_number_of_players']
-            date = form.cleaned_data['date']
+            evening = form.cleaned_data['evening']
 
             adventure = Adventure(title=title,
                                   dm_name=dm_name,
@@ -147,7 +146,7 @@ def create_adventure(request):
                                   min_level=min_level,
                                   max_level=max_level,
                                   max_number_of_players=max_number_of_players,
-                                  date=date)
+                                  evening=evening)
             adventure.save()
 
             return HttpResponseRedirect(reverse('adventures'))
@@ -170,6 +169,55 @@ def create_adventure(request):
         return render(request,'view_tables/create_adventure.html',context=context)
         
         
+@permission_required('view_tables.can_view_evenings')
+def show_evenings(request):
+    #show all available_events
+    evenings = Evening.objects.all()
+    today = datetime.date.today()
+    next_evening = []
+    future_evenings = []
+    past_evenings = []
+    low_delta = -1
+    
+    for e in evenings:
+        delta = (e.date - today).days
+        if delta < 0:
+            #this is a past event
+            past_evenings.append(e)
+        elif low_delta == -1:
+            #this is the first event that is not in the past, consider this as the upcoming event
+            next_evening = [e]
+            low_delta = e
+        elif low_delta > delta:
+            #this event is closer than a stored upcoming event, replace
+            future_evenings.append(next_evening[0])
+            next_evening = [e]
+        else:
+            #this is a future event
+            future_evenings.append(e)
             
 
-            
+    context = {
+        "future": future_evenings,
+        "past": past_evenings,
+        "upcoming": next_evening,
+    }
+
+    return render(request,'view_tables/show_evenings.html',context=context)
+    
+                                                
+@permission_required('view_tables.can_view_evenings')
+def show_evenings_details(request,pk):
+    try:
+        evening = Evening.objects.get(pk=pk)
+    except Evening.DoesNotExist:
+        raise Http404('Evening does not exist')
+
+    
+    context = {
+        'date':evening.date,
+        'tables':get_tables_for_evening(evening),
+    }
+
+
+    return render(request, 'view_tables/show_evening_details.html',context=context)

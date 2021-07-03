@@ -1,0 +1,16 @@
+{% extends "generic.html" %}
+
+{% block content %}
+  {% if upcoming %}
+    <h1>Upcoming Evenings</h1>
+    <ul>
+      {% for e in upcoming %}
+	<li>
+	  <a href="{{ e.get_absolute_url }}">{{ e }}</a>
+	</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+{% endblock %}
+

@@ -30,7 +30,7 @@ class Adventure(models.Model):
 class Evening(models.Model):
     date = models.DateField(help_text="When will the evening take place?")
     
-    def get_aboslute_url(self):
+    def get_absolute_url(self):
         """Return the url to access adventures in an evening"""
         return reverse('evening-detail', args=[str(self.id)])
 
@@ -48,8 +48,6 @@ class Registrant(models.Model):
     name = models.CharField(max_length=200,help_text='Please enter the name so we can know you')
     adventure = models.ForeignKey(Adventure,help_text='Which adventure do you want to play?',on_delete=models.SET_NULL,null=True)
     
-
-    
     def get_adventure(self):
         return f'{self.adventure.title} ({self.adventure.dm_name})'
     def get_adventure_url(self):
@@ -59,20 +57,24 @@ class Registrant(models.Model):
     class Meta:
         ordering = ['name']
 
-
-
-
-
-
 def get_available_tables():
-    registrants = Registrant.objects.all()
-    counter = {}
-    for r in registrants:
-        if not r.adventure.pk in counter:
-            counter[r.adventure.pk] = 0
-        counter[r.adventure.pk] += 1
+    #getting relevant evening
+    evenings = Evening.objects.filter(date__gte=datetime.date.today())
+    
+    out = {}
+    for e in evenings:
+        for a in Adventure.objects.filter(evening=e):
+            if Registrant.objects.filter(adventure=a).count() >= a.max_number_of_players:
+                continue
+            out[a] = {'evening':e}
+            
 
-    adventures_all = [a for a in Adventure.objects.filter(date__gte=datetime.date.today())]
-    adventures = [a for a in adventures_all if (a.pk not in counter or a.max_number_of_players > counter[a.pk])]
-    return adventures
+    return out
 
+
+def get_tables_for_evening(evening):
+    tables = Adventure.objects.filter(evening=evening)
+    out = {}
+    for table in tables:
+        out[table] = Registrant.objects.filter(adventure=table)
+    return out

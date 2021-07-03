@@ -13,11 +13,6 @@ class registerToAdventureForm(forms.Form):
     player = forms.CharField(help_text="What is your name?")
     #getting all adventures
 
-
-
-
-    
-    #adventure = forms.ChoiceField(help_text="Which adventure do you want to play?",choices =choices)
     adventure = forms.ChoiceField(help_text="Which adventure do you want to play?", choices= [])
 
     def __init__(self, *args, **kwargs):
@@ -67,14 +62,6 @@ class CreateTableForm(ModelForm):
                   'max_number_of_players',
                   'evening',]
 
-#        widgets = {
-#            'date':DatePickerInput(
-#                options={
-#                    "format": "DD/MM/YYYY",
-#                },
-#            )
-#        }
-
     def clean(self):
         _title = self.cleaned_data['title']
         if _title.strip() == '':
@@ -98,9 +85,6 @@ class CreateTableForm(ModelForm):
             if _min_level > _max_level:
                 raise ValidationError(_('Minumum character level has to be equal or smaller than maximum character level'))
 
-#        _data = self.cleaned_data['date']
-#        if _data < datetime.date.today():
-#            raise ValidationError(_('Please update the date of the adventure to be in the future'))
 
 
         

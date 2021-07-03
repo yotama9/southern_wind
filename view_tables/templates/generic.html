@@ -22,13 +22,12 @@
 	    <li><a href="{% url 'index' %}">Home</a></li>
 	    {% if perms.view_tables.add_evening %}
 	      <li><a href="{% url 'create-evening' %}">Add evening</a></li>
+	      <li><a href="{% url 'show-evenings' %}">View evenings</a></li>
 	    {% endif %}
 	    {% if perms.view_tables.add_adventure %}
 	      <li><a href="{% url 'create-adventure' %}">Add adventure</a></li>
 	    {% endif %}
 	    <li><a href="{%url 'register-to-table' %}">Register to an adventure</a></li>
-	    <li><a href="{% url 'adventures' %}">View tables</a></li>
-	    <li><a href="{% url 'registrants' %}">View registrants</a></li>
 	    {% if user.is_authenticated %}
 	      <li>Logged in as: {{ user.get_username }}</li>
    	      <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
