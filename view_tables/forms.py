@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from bootstrap_datepicker_plus import DatePickerInput
-from view_tables.models import Adventure,Registrant,get_available_tables
+from view_tables.models import Adventure,Registrant,get_available_tables,Evening
 
 import datetime
 
@@ -36,7 +36,25 @@ class registerToAdventureForm(forms.Form):
         return data
 
 
-    
+class CreateEveningForm(ModelForm):
+    class Meta:
+        model = Evening
+        fields =['date',]
+        widgets = {
+            'date':DatePickerInput(
+                options={
+                    'format':"MM/DD/YYYY",
+                    }
+                )
+            }
+
+    def clean(self):
+        _date = self.cleaned_data['date']
+        today = datetime.date.today()
+
+        if _date < datetime.date.today():
+            raise ValidationError(_('Please use date in the future'))
+        
 class CreateTableForm(ModelForm):
     class Meta:
         model = Adventure
@@ -47,15 +65,15 @@ class CreateTableForm(ModelForm):
                   'min_level',
                   'max_level',
                   'max_number_of_players',
-                  'date',]
+                  'evening',]
 
-        widgets = {
-            'date':DatePickerInput(
-                options={
-                    "format": "DD/MM/YYYY",
-                },
-            )
-        }
+#        widgets = {
+#            'date':DatePickerInput(
+#                options={
+#                    "format": "DD/MM/YYYY",
+#                },
+#            )
+#        }
 
     def clean(self):
         _title = self.cleaned_data['title']
@@ -80,9 +98,9 @@ class CreateTableForm(ModelForm):
             if _min_level > _max_level:
                 raise ValidationError(_('Minumum character level has to be equal or smaller than maximum character level'))
 
-        _data = self.cleaned_data['date']
-        if _data < datetime.date.today():
-            raise ValidationError(_('Please update the date of the adventure to be in the future'))
+#        _data = self.cleaned_data['date']
+#        if _data < datetime.date.today():
+#            raise ValidationError(_('Please update the date of the adventure to be in the future'))
 
 
         

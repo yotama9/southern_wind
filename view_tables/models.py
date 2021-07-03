@@ -12,7 +12,7 @@ class Adventure(models.Model):
     min_level = models.IntegerField(help_text='What is the minimum character level for this adventure?')
     max_level = models.IntegerField(help_text='What is the maximum character level for this adventure?')
     max_number_of_players = models.IntegerField(help_text='Total numbers of players you are willing to host')    
-    date = models.DateField()
+    evening = models.ForeignKey("Evening",help_text="what is the relevant evening?",on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
         """String for representing the Model object"""
@@ -27,6 +27,20 @@ class Adventure(models.Model):
 
     
 
+class Evening(models.Model):
+    date = models.DateField(help_text="When will the evening take place?")
+    
+    def get_aboslute_url(self):
+        """Return the url to access adventures in an evening"""
+        return reverse('evening-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String representation of the evening (the date)"""
+        day = self.date.day
+        month = self.date.month
+        year = self.date.year
+        date = '{}/{}/{}'.format(day,month,year)
+        return date
 
                             
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from view_tables.models import Adventure, Registrant, get_available_tables
+from view_tables.models import Adventure, Registrant, get_available_tables, Evening
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
 import datetime
 
-from view_tables.forms import registerToAdventureForm, CreateTableForm
+from view_tables.forms import registerToAdventureForm, CreateTableForm, CreateEveningForm
 
 
 def index(request):
@@ -75,6 +75,37 @@ def register_to_table(request):
         return render(request,'view_tables/register_to_table.html',context=context)
 
 
+
+def create_evening(request):
+    """View to create a table, this is supposed to be really simple"""
+    if request.method == "POST":
+        #store the date as a new evening
+        form = CreateEveningForm(request.POST)
+
+        if form.is_valid():
+            #check that the date is valid
+            date = form.cleaned_data['date']
+            evening = Evening(date=date)
+            evening.save()
+            return HttpResponseRedirect(reverse('adventures'))
+        else: #invlaid form
+            context = {
+                'form': form
+                }
+            return render(request,'view_tables/create_evening.html',context=context)
+    else:
+        #this is a new attempt to make an evening
+        
+        form = CreateEveningForm()
+        context = {
+            'form':form
+            }
+        return render(request,'view_tables/create_evening.html',context=context)
+        
+        
+            
+
+        
                    
 
 @permission_required('view_tables.add_adventure')
@@ -86,6 +117,7 @@ def create_adventure(request):
 
         #create a form instance and populate it with data.
         form = CreateTableForm(request.POST)
+
 
         #check if the form is valid:
         if form.is_valid():
@@ -128,8 +160,12 @@ def create_adventure(request):
 
     else:
         #this is a GET(or any other request), create an empty form
+
+        #check that the date is valid
+        
+        form = CreateTableForm(initial={'date':'22/07/test'})
         context = {
-            'form':CreateTableForm(),
+            'form':form
             }
         return render(request,'view_tables/create_adventure.html',context=context)
         

@@ -8,6 +8,7 @@ urlpatterns = [
     path('registrants',views.RegistrantListView.as_view(),name='registrants'),
     path('register_to_table/',views.register_to_table, name='register-to-table'),
     path('create_adventure/',views.create_adventure, name='create-adventure'),
+    path('create_evening/',views.create_evening, name='create-evening'),
     ]
 
 

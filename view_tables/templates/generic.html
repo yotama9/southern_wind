@@ -20,6 +20,9 @@
 	  {% block sidebar %}
 	  <ul class="sidebar-nav">									   
 	    <li><a href="{% url 'index' %}">Home</a></li>
+	    {% if perms.view_tables.add_evening %}
+	      <li><a href="{% url 'create-evening' %}">Add evening</a></li>
+	    {% endif %}
 	    {% if perms.view_tables.add_adventure %}
 	      <li><a href="{% url 'create-adventure' %}">Add adventure</a></li>
 	    {% endif %}

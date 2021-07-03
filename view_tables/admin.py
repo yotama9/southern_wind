@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Adventure, Registrant
+from .models import Adventure, Registrant,Evening
 
 # Register your models here.
 
@@ -7,7 +7,7 @@ from .models import Adventure, Registrant
 @admin.register(Adventure)
 class AdventureAdmin(admin.ModelAdmin):
     list_display = ('title','dm_name','is_dnd5')
-    fields = [('title','dm_name'),'teaser','is_dnd5', ('min_level','max_level'),('max_number_of_players','date')]
+    fields = [('title','dm_name'),'teaser','is_dnd5', ('min_level','max_level'),('max_number_of_players','evening')]
 
 
 #admin.site.register(Registrant)
@@ -16,4 +16,8 @@ class RegistrantAdmin(admin.ModelAdmin):
     list_display = ('name','get_adventure')
     list_filter = ['name']
 
+
+@admin.register(Evening)
+class RegisterEvening(admin.ModelAdmin):
+    list_display = ['date']
 
