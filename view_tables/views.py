@@ -60,7 +60,7 @@ def register_to_table(request):
             reg.save()
 
             #redirect to an new URL:
-            return HttpResponseRedirect(reverse('adventures'))
+            return HttpResponseRedirect(reverse('index'))
         else:
             context = {
                 'form': form

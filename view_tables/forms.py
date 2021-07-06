@@ -11,24 +11,37 @@ import datetime
 
 class registerToAdventureForm(forms.Form):
     player = forms.CharField(help_text="What is your name?")
-    #getting all adventures
-
     adventure = forms.ChoiceField(help_text="Which adventure do you want to play?", choices= [])
+    has_character = forms.BooleanField(required=False)
+    character_level = forms.IntegerField(required=False)
 
     def __init__(self, *args, **kwargs):
         super(registerToAdventureForm,self).__init__(*args,**kwargs)
         choices = get_available_tables()
-        choices = ((a.pk,a.title) for a in choices)
+        choices = [(-1,'select adventure')] + [(a.pk,a.title) for a in choices]
         self.fields['adventure'].choices = choices
 
-    def clean_player(self):
-        data = self.cleaned_data['player']
+    def clean(self):
+        p_name = self.cleaned_data['player']
 
         #check if player name is not empty
-        if data.strip() == '':
+        if p_name.strip() == '':
             raise ValidationError(_('Plesae provide a player name'))
 
-        return data
+        adventure_ = self.cleaned_data['adventure']
+        if adventure_ == '-1':
+            raise ValidationError(_('Please select the adventure you wish to join'))
+
+        #check if the player has a character and if there is a level
+        print (self.cleaned_data)
+        has_c = self.cleaned_data['has_character']
+        char_level = self.cleaned_data['character_level']
+        if has_c:
+            if char_level == None:
+                raise ValidationError(_('Please state your character level'))
+            if char_level < 1 or char_level > 20:
+                raise ValidationError(_('Please add a valid character level'))
+
 
 
 class CreateEveningForm(ModelForm):

@@ -47,6 +47,9 @@ class Evening(models.Model):
 class Registrant(models.Model):
     name = models.CharField(max_length=200,help_text='Please enter the name so we can know you')
     adventure = models.ForeignKey(Adventure,help_text='Which adventure do you want to play?',on_delete=models.SET_NULL,null=True)
+    has_character = models.BooleanField(help_text="Do you have a character relevant (level and gaming system) for this table?",null=True)
+    character_level = models.IntegerField(help_text="What is your character level?", null=True,blank=True)
+    
     
     def get_adventure(self):
         return f'{self.adventure.title} ({self.adventure.dm_name})'
@@ -64,6 +67,7 @@ def get_available_tables():
     out = {}
     for e in evenings:
         for a in Adventure.objects.filter(evening=e):
+
             if Registrant.objects.filter(adventure=a).count() >= a.max_number_of_players:
                 continue
             out[a] = {'evening':e}
