@@ -12,7 +12,7 @@ import datetime
 class registerToAdventureForm(forms.Form):
     player = forms.CharField(help_text="What is your name?")
     adventure = forms.ChoiceField(help_text="Which adventure do you want to play?", choices= [])
-    has_character = forms.BooleanField(required=False)
+    I_already_have_a_character = forms.BooleanField(required=False)
     character_level = forms.IntegerField(required=False)
 
     def __init__(self, *args, **kwargs):
