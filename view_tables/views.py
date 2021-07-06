@@ -169,7 +169,7 @@ def create_adventure(request):
         return render(request,'view_tables/create_adventure.html',context=context)
         
         
-@permission_required('view_tables.can_view_evenings')
+@permission_required('view_tables.view_evening')
 def show_evenings(request):
     #show all available_events
     evenings = Evening.objects.all()
@@ -206,7 +206,7 @@ def show_evenings(request):
     return render(request,'view_tables/show_evenings.html',context=context)
     
                                                 
-@permission_required('view_tables.can_view_evenings')
+@permission_required('view_tables.view_evening')
 def show_evenings_details(request,pk):
     try:
         evening = Evening.objects.get(pk=pk)
