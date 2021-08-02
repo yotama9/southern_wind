@@ -52,7 +52,8 @@ class CreateEveningForm(ModelForm):
             'date':DatePickerInput(
                 options={
                     'format':"MM/DD/YYYY",
-                    }
+                    },
+                attrs={'onclick':'test()'},
                 )
             }
 
@@ -72,8 +73,33 @@ class CreateTableForm(ModelForm):
                   'is_dnd5',
                   'min_level',
                   'max_level',
+                  'limit_number_of_players',
                   'max_number_of_players',
                   'evening',]
+        widgets = {
+            'limit_number_of_players':forms.CheckboxInput(
+                attrs={'id':'limit_number_of_players',
+                       'onclick':'toggle_number_of_players_field()',
+                       }
+                ),
+            'is_dnd5':forms.CheckboxInput(
+                attrs={'id':'is_dnd5',}
+                ),
+            'max_number_of_players':forms.NumberInput(
+                attrs={'id':'max_number_of_players',}
+                ),
+            'min_level':forms.NumberInput(
+                attrs={'id':'min_level',}
+                ),
+            'max_level':forms.NumberInput(
+                attrs={'id':'max_level',}
+                ),
+
+            }
+
+
+
+
 
     def clean(self):
         print('clean')

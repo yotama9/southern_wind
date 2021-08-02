@@ -11,7 +11,8 @@ class Adventure(models.Model):
     is_dnd5 = models.BooleanField(help_text='Is this a D&D5 adventure?')
     min_level = models.IntegerField(help_text='What is the minimum character level for this adventure?',null=True,blank=True)
     max_level = models.IntegerField(help_text='What is the maximum character level for this adventure?',null=True,blank=True)
-    max_number_of_players = models.IntegerField(help_text='Total numbers of players you are willing to host')    
+    limit_number_of_players = models.BooleanField(help_text="Do you wish to limit the number of players?",default=False)
+    max_number_of_players = models.IntegerField(help_text='Total numbers of players you are willing to host',null=True,blank=True)    
     evening = models.ForeignKey("Evening",help_text="what is the relevant evening?",on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
