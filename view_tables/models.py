@@ -83,3 +83,9 @@ def get_tables_for_evening(evening):
     for table in tables:
         out[table] = Registrant.objects.filter(adventure=table)
     return out
+
+
+def get_available_evenings():
+    out = Evening.objects.filter(date__gte=datetime.date.today())
+    return out
+    

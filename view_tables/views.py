@@ -128,7 +128,7 @@ def create_adventure(request):
                   'min_level',
                   'max_level',
                   'max_number_of_players',
-                  'date',]
+                  'evening',]
                     
             title = form.cleaned_data['title']
             dm_name = form.cleaned_data['dm_name']
@@ -137,7 +137,9 @@ def create_adventure(request):
             min_level = form.cleaned_data['min_level']
             max_level = form.cleaned_data['max_level']
             max_number_of_players = form.cleaned_data['max_number_of_players']
-            evening = form.cleaned_data['evening']
+            evening_id = form.cleaned_data['evening']
+            evening = Evening.objects.filter(pk=evening_id)[0]
+
 
             adventure = Adventure(title=title,
                                   dm_name=dm_name,

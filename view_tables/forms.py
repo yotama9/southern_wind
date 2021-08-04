@@ -4,7 +4,8 @@ from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 from bootstrap_datepicker_plus import DatePickerInput
-from view_tables.models import Adventure,Registrant,get_available_tables,Evening
+from view_tables.models import Adventure,Registrant,Evening
+from view_tables.models import get_available_tables, get_available_evenings
 
 import datetime
 
@@ -63,41 +64,36 @@ class CreateEveningForm(ModelForm):
 
         if _date < datetime.date.today():
             raise ValidationError(_('Please use date in the future'))
+
+
         
-class CreateTableForm(ModelForm):
-    class Meta:
-        model = Adventure
-        fields = ['title',
-                  'dm_name',
-                  'teaser',
-                  'is_dnd5',
-                  'min_level',
-                  'max_level',
-                  'limit_number_of_players',
-                  'max_number_of_players',
-                  'evening',]
-        widgets = {
-            'limit_number_of_players':forms.CheckboxInput(
-                attrs={'id':'limit_number_of_players',
-                       'onclick':'toggle_number_of_players_field()',
-                       }
-                ),
-            'is_dnd5':forms.CheckboxInput(
-                attrs={'id':'is_dnd5',}
-                ),
-            'max_number_of_players':forms.NumberInput(
-                attrs={'id':'max_number_of_players',}
-                ),
-            'min_level':forms.NumberInput(
-                attrs={'id':'min_level',}
-                ),
-            'max_level':forms.NumberInput(
-                attrs={'id':'max_level',}
-                ),
 
-            }
+class CreateTableForm(forms.Form):
+    title = forms.CharField(help_text="What is your adventure's title?")
+    dm_name = forms.CharField(help_text="What is your DM's display name?")
+    teaser = forms.CharField(help_text="Please write here a short teaser/description of your adventure",widget=forms.Textarea())
+    is_dnd5 = forms.BooleanField(help_text="Is this a D&D5 adventure?", required=False)
+    min_level = forms.IntegerField(required=False)
+    max_level = forms.IntegerField(required=False)
+    limit_number_of_players = forms.BooleanField(help_text='Do you wish to have a limit to the number of players?', required=False)
+    max_number_of_players = forms.IntegerField(required=False)
+    evening = forms.ChoiceField(help_text="Please select the evening for the adventure.", choices = [])
+
+    limit_number_of_players.widget.attrs.update({'id':'limit_number_of_players',
+                                                 'onclick':'toggle_number_of_players_field()'})
+
+    max_number_of_players.widget.attrs.update({'id':'max_number_of_players'})
+    min_level.widget.attrs.update({'id':'min_level'})
+    max_level.widget.attrs.update({'id':'max_level'})
+    is_dnd5.widget.attrs.update({'id':'is_dnd5'})
 
 
+
+    def __init__(self, *args, **kwargs):
+        super(CreateTableForm,self).__init__(*args,**kwargs)
+        choices = get_available_evenings()
+        choices = [(-1,'select evenings')] + [(a.pk,a.date) for a in choices]
+        self.fields['evening'].choices = choices
 
 
 

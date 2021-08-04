@@ -36,7 +36,7 @@
 	      {{ form.teaser }}
 	    </td>
 	  </tr>
-	  <tr>
+	  <tr onmouseover='check_fields()'>
 	    <td>
 	      <label for="{{ form.is_dnd5.id_for_label }}">Is this a D&amp;D5 table :</label>
 	    </td>
@@ -51,28 +51,28 @@
 	    <td>
 	      <table>
 		<tr>
-		  <td>
+		  <td onmouseover='check_fields()'>
 		    {{ form.min_level }}
 		  </td>
 		  <td>
 		    &mdash;
 		  </td>
-		  <td>
+		  <td onmouseover='check_fields()'>
 		    {{ form.max_level }}
 		  </td>
 		</tr>
 	      </table>
 	    </td>
 	  </tr>
-	  <tr>
-	    <td>
+	  <tr onmouseover='check_fields()'>
+	    <td >
 	      <label for="{{ form.limit_number_of_players.id_for_label }}">Limit Mumber of Players?</label>
 	    </td>
 	    <td>
 	      {{ form.limit_number_of_players }}
 	    </td>
 	  </tr>
-	  <tr hidden id='max_number_of_player_row'>
+	  <tr hidden id='max_number_of_player_row' onmouseover='check_fields()'>
 	    <td>
 	      <label for="{{ form.max_number_of_players.id_for_label }}">Max Mumber of Players</label>
 	    </td>
@@ -94,7 +94,9 @@
 	<!--      {{ form.as_table }}-->
 	{{ form.media }}
       </table>
-      <input type="submit" onmouseover='check_fields()' value="Submit">
+      <div onmouseover='check_fields()'>
+	<input id='submit' type="submit" value="Submit">
+      </div>
       <p id='error'></p>
 
     </div>
