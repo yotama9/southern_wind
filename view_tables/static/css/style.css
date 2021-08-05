@@ -1,0 +1,19 @@
+.sidebar-nav{
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+
+.error{
+    color: #DD4444;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+}
+
+.credits{
+    font-size:small;
+}
