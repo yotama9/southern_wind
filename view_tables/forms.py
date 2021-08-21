@@ -35,7 +35,7 @@ class registerToAdventureForm(forms.Form):
 
         #check if the player has a character and if there is a level
         print (self.cleaned_data)
-        has_c = self.cleaned_data['has_character']
+        has_c = self.cleaned_data['I_already_have_a_character']
         char_level = self.cleaned_data['character_level']
         if has_c:
             if char_level == None:
