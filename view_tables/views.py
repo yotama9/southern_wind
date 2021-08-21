@@ -18,7 +18,6 @@ def index(request):
     """View function for home page of site """
     #Count stuff
     upcoming_evenings = get_available_evenings()
-    print(upcoming evenings)
     num_evenings = len(upcoming_evenings)
     adventures = get_available_tables(include_full=True)
     num_adventures = len(adventures)
