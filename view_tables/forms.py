@@ -16,6 +16,11 @@ class registerToAdventureForm(forms.Form):
     I_already_have_a_character = forms.BooleanField(required=False)
     character_level = forms.IntegerField(required=False)
 
+    I_already_have_a_character.widget.attrs.update({'onclick':'toggle_character_level_field()'})
+    character_level.widget.attrs.update({'disabled':'true'})
+
+    
+
     def __init__(self, *args, **kwargs):
         super(registerToAdventureForm,self).__init__(*args,**kwargs)
         choices = get_available_tables()

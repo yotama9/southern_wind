@@ -1,5 +1,9 @@
 {% extends "generic.html" %}
 
+{% load static %}
+{% block extrahead %}
+  <script src="{% static 'js/register_to_table.js' %}"></script>
+{% endblock %}
 {% block content %}
   <h1>Register to table</h1>
   <h2>Available tables</h1>
@@ -23,8 +27,46 @@
     <h2>Select your table</h2>
     {% csrf_token %}
     <table>
-      {{ form.as_table }}
+      <tr>
+	<td>
+	  <label for="{{ form.player.id_for_label }}">Player:</label>
+	</td>
+	<td>
+	  {{ form.player }}
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <label for="{{ form.adventure.id_for_label }}">Adventure:</label>
+	</td>
+	<td>
+	  {{ form.adventure }}
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <label for="{{ form.I_already_have_a_character.id_for_label }}">I already have a character:</label>
+	</td>
+	<td>
+	  {{ form.I_already_have_a_character }}
+	</td>
+      </tr>
+      <tr>
+	<td>
+	  <label for="{{ form.character_level.id_for_label }}">Character level:</label>
+	</td>
+	<td>
+	  {{ form.character_level }}
+	</td>
+      </tr>
+      
+      
+	  <!--{{ form.as_table }}-->
     </table>
-    <input type="submit" value="Submit">
-  </from>
+    <div onmouseover='check_fields()'>
+      <input id ='submit' type="submit" value="Submit">
+    </div>
+</from>
+
+<p class='error' id='error'></p>
 {% endblock %}
