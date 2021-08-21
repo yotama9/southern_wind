@@ -61,7 +61,7 @@ class Registrant(models.Model):
     class Meta:
         ordering = ['name']
 
-def get_available_tables():
+def get_available_tables(include_full=False):
     #getting relevant evening
     evenings = Evening.objects.filter(date__gte=datetime.date.today())
     
@@ -69,12 +69,12 @@ def get_available_tables():
     for e in evenings:
         for a in Adventure.objects.filter(evening=e):
 
-            if Registrant.objects.filter(adventure=a).count() >= a.max_number_of_players:
-                continue
-            out[a] = {'evening':e}
-            
-
+            n_registrants = Registrant.objects.filter(adventure=a).count()
+            if a.max_number_of_players == None or (include_full or n_registrants < a.max_number_of_players):
+                out[a] = {'evening':e,'n_registrants':n_registrants}
     return out
+
+        
 
 
 def get_tables_for_evening(evening):

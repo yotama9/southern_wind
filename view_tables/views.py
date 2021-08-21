@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from view_tables.models import Adventure, Registrant, Evening
-from view_tables.models import get_tables_for_evening, get_available_tables
+from view_tables.models import get_tables_for_evening, get_available_tables,get_available_evenings
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -10,16 +10,23 @@ from django.contrib.auth.decorators import permission_required
 import datetime
 from datetime import timedelta
 
+
 from view_tables.forms import registerToAdventureForm, CreateTableForm, CreateEveningForm
 
 
 def index(request):
     """View function for home page of site """
     #Count stuff
-    num_adventures = Adventure.objects.all().count()
-    num_registrants = Registrant.objects.all().count()
+    upcoming_evenings = get_available_evenings()
+    num_evenings = len(upcoming_evenings)
+    adventures = get_available_tables(include_full=True)
+    num_adventures = len(adventures)
+    print (num_adventures)
+    print (adventures)
+    num_registrants = sum([adventures[a]['n_registrants'] for a in adventures])
 
     context = {
+        'num_evenings':num_evenings,
         'num_adventures':num_adventures,
         'num_registrants':num_registrants,
     }
