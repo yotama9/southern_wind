@@ -86,6 +86,7 @@ def get_tables_for_evening(evening):
 
 
 def get_available_evenings():
+    print (Evening.objects.all())
     out = Evening.objects.filter(date__gte=datetime.date.today())
     return out
     
