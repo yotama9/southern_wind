@@ -196,7 +196,7 @@ def show_evenings(request):
         elif low_delta == -1:
             #this is the first event that is not in the past, consider this as the upcoming event
             next_evening = [e]
-            low_delta = e
+            low_delta = delta
         elif low_delta > delta:
             #this event is closer than a stored upcoming event, replace
             future_evenings.append(next_evening[0])
