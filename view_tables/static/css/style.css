@@ -9,6 +9,11 @@
     color: #DD4444;
 }
 
+.success{
+    color: #44DD44;
+    font-size: 18pt;
+}
+
 .logo{
     display: flex;
     justify-content: center;

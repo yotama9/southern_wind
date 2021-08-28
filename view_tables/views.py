@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
+from django.contrib import messages
 import datetime
 from datetime import timedelta
 
@@ -67,6 +68,7 @@ def register_to_table(request):
             reg.save()
 
             #redirect to an new URL:
+            messages.success(request,'Thank you for registrating')
             return HttpResponseRedirect(reverse('index'))
         else:
             context = {
