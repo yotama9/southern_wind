@@ -18,6 +18,8 @@
 	  D&amp;D5 adventure (levels {{ adventure.min_level }} - {{ adventure.max_level }})
 	{% endif %}
       </p>
+      <span id="{{ adventure.id }}_min_level" value="{{ adventure.min_level }}"></span>
+      <span id="{{ adventure.id }}_max_level" value="{{ adventure.max_level }}"></span>
       {{ adventure.teaser }}
       <hr>
     {% endfor %}

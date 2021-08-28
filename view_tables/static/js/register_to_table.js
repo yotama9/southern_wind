@@ -1,6 +1,7 @@
 function check_fields(){
     document.getElementById('submit').removeAttribute('disabled');
-    error = "";
+
+    var error = "";
     if (document.getElementById('id_player').value == ""){
 	error = error + "Please add your name to the form<br>";
     }
@@ -9,12 +10,23 @@ function check_fields(){
 	error = error + "Please select an adventure to register to<br>";
     }
 
-    has_char = document.getElementById('id_I_already_have_a_character').checked;
-    char_level = document.getElementById('id_character_level').value
+    var has_char = document.getElementById('id_I_already_have_a_character').checked;
+    var char_level = document.getElementById('id_character_level').value
+
+    /*Getting the selected adventure */
+    var select = document.getElementById('id_adventure');
+    var adventure = select.options[select.selectedIndex].value;
+    var min_level = document.getElementById(adventure+"_min_level").getAttribute("value");
+    var max_level = document.getElementById(adventure+"_max_level").getAttribute("value");
+
     
     if (has_char){
 	if (char_level == ''){
 	    error = error + "Please add your character level<br>";
+	} else if (min_level != "None" && char_level < min_level){
+	    error = error + "Character level is too low<br>";
+	} else if (max_level != "None" && char_level > max_level){
+	    error = error + "Character level is too high<br>";
 	}
     }
 
