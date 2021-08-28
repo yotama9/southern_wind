@@ -8,9 +8,35 @@
 	<li>
 	  <a href="{{ e.get_absolute_url }}">{{ e }}</a>
 	</li>
+	{% endfor %}
+    </ul>
+  {% endif %}
+
+  {%if future %}
+    <h1>Future Evenings</h1>
+    <ul>
+      {% for e in future %}
+	<li>
+	  <a href={{ e.get_absolute_url }}>{{ e }}</a>
+	</li>
       {% endfor %}
     </ul>
   {% endif %}
+
+  {% if past %}
+    <h1>Past Evenings</h1>
+    <ul>
+      {% for e in past %}
+	<li>
+	  <a href={{ e.get_absolute_url }}>{{ e }}</a>
+	</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+    
+    
+	
+    
 
 {% endblock %}
 
