@@ -13,7 +13,11 @@
   {% for registrant in adventure.registrant_set.all %}
     <hr>
     <div class='player_name'>{{registrant.name}}</div>
-    <div style="margin-left: 20px">{{ registrant.character_name }} ({{ registrant.character_level }})</div>
+    {% if registrant.has_character %}
+      <div style="margin-left: 20px">{{ registrant.character_name }} ({{ registrant.character_level }})</div>
+    {% else %}
+      <div>No character info </div>
+    {% endif %}
 
 {% endfor %}
 {% endblock %}
