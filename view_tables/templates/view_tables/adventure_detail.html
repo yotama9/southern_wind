@@ -2,18 +2,20 @@
 
 {% block content %}
   <h1>{{adventure.title}}</h1>
-  <p><strong>DM: </strong>{{adventure.dm_name}}</p>
-  <p><strong>Teaser: </strong>{{adventure.teaser}}</p>
-  <p><strong>D&D5 ? </strong>{{adventure.is_dnd5}}</p>
-  <p><strong>Min level: </strong>{{adventure.min_level}}</p>
-  <p><strong>Max level: </strong>{{adventure.max_level}}</p>
-  <p><strong>Max number of players: </strong>{{adventure.max_number_of_players}}</p>
-  <p><strong>Date:</strong>{{adventure.evening}}</p>
+  <div><strong>DM: </strong>{{adventure.dm_name}}</div>
+  <div><strong>Teaser: </strong>{{adventure.teaser}}</div>
+  <div><strong>D&D5 ? </strong>{{adventure.is_dnd5}}</div>
+  <div><strong>Min level: </strong>{{adventure.min_level}}</div>
+  <div><strong>Max level: </strong>{{adventure.max_level}}</div>
+  <div><strong>Max number of players: </strong>{{adventure.max_number_of_players}}</div>
+  <div><strong>Date:</strong>{{adventure.evening}}</div>
 
   {% for registrant in adventure.registrant_set.all %}
     <hr>
-    <p>{{registrant.name}}</p>
-  {% endfor %}
+    <div class='player_name'>{{registrant.name}}</div>
+    <div style="margin-left: 20px">{{ registrant.character_name }} ({{ registrant.character_level }})</div>
+
+{% endfor %}
 {% endblock %}
 
 

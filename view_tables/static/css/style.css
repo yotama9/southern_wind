@@ -22,3 +22,8 @@
 .credits{
     font-size:small;
 }
+
+.player_name{
+    color: #402300;
+    font-size:135%;
+}

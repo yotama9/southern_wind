@@ -15,9 +15,11 @@ class registerToAdventureForm(forms.Form):
     adventure = forms.ChoiceField(help_text="Which adventure do you want to play?", choices= [])
     I_already_have_a_character = forms.BooleanField(required=False)
     character_level = forms.IntegerField(required=False)
+    character_name = forms.CharField(help_text="What is your character name?")
 
     I_already_have_a_character.widget.attrs.update({'onclick':'toggle_character_level_field()'})
     character_level.widget.attrs.update({'disabled':'true'})
+    character_name.widget.attrs.update({'disabled':'true'})
 
     
 
@@ -42,11 +44,14 @@ class registerToAdventureForm(forms.Form):
         print (self.cleaned_data)
         has_c = self.cleaned_data['I_already_have_a_character']
         char_level = self.cleaned_data['character_level']
+        char_name = self.cleaned_data['character_name']
         if has_c:
             if char_level == None:
                 raise ValidationError(_('Please state your character level'))
             if char_level < 1 or char_level > 20:
                 raise ValidationError(_('Please add a valid character level'))
+            if char_name == None:
+                raise ValidationError(_('Please state your character name'))
 
 
 

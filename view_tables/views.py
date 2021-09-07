@@ -64,7 +64,13 @@ def register_to_table(request):
             #process the data in form.cleaned_data as required
             adventure_id = form.cleaned_data['adventure']
             adventure = Adventure.objects.filter(pk=adventure_id)[0]
-            reg = Registrant(name=form.cleaned_data['player'],adventure=adventure)
+            print (form.cleaned_data)
+            reg = Registrant(name=form.cleaned_data['player'],
+                             has_character=form.cleaned_data['I_already_have_a_character'],
+                             character_level=form.cleaned_data['character_level'],
+                             character_name=form.cleaned_data['character_name'],
+                             adventure=adventure)
+            
             reg.save()
 
             #redirect to an new URL:

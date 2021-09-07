@@ -50,6 +50,7 @@ class Registrant(models.Model):
     adventure = models.ForeignKey(Adventure,help_text='Which adventure do you want to play?',on_delete=models.SET_NULL,null=True)
     has_character = models.BooleanField(help_text="Do you have a character relevant (level and gaming system) for this table?",null=True)
     character_level = models.IntegerField(help_text="What is your character level?", null=True,blank=True)
+    character_name = models.CharField(max_length=200,help_text="Please write your character's name",null=True,blank=True)
     
     
     def get_adventure(self):
@@ -83,6 +84,8 @@ def get_tables_for_evening(evening):
     for table in tables:
         out[table] = Registrant.objects.filter(adventure=table)
     return out
+
+
 
 
 def get_available_evenings():

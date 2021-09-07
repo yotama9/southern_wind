@@ -12,6 +12,7 @@ function check_fields(){
 
     var has_char = document.getElementById('id_I_already_have_a_character').checked;
     var char_level = document.getElementById('id_character_level').value
+    var char_name = document.getElementById('id_character_name').value
 
     /*Getting the selected adventure */
     var select = document.getElementById('id_adventure');
@@ -28,6 +29,10 @@ function check_fields(){
 	} else if (max_level != "None" && char_level > max_level){
 	    error = error + "Character level is too high<br>";
 	}
+
+	if (char_name == ''){
+	    error = error + "Please write your character name<br>";
+	}
     }
 
     if (error != ''){
@@ -41,8 +46,10 @@ function check_fields(){
 function toggle_character_level_field(){
     if (document.getElementById('id_I_already_have_a_character').checked){
 	document.getElementById('id_character_level').removeAttribute('disabled');
+	document.getElementById('id_character_name').removeAttribute('disabled');
     }else{
 	document.getElementById('id_character_level').setAttribute('disabled','true');
+	document.getElementById('id_character_name').setAttribute('disabled','true');
 	document.getElementById('id_character_level').value = '';
     }
 }

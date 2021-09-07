@@ -9,7 +9,12 @@
       </li>
       {% for r in regs %}
 	<ul>
-	  <il>{{ r.name }}</il>
+	  <li class="player_name">{{ r.name }}</li>
+	  {% if r.has_character %}
+	    <div>
+	      {{r.character_name }} (level {{ r.character_level }})
+	    </div>
+	  {% endif %}
 	</ul>
       {% endfor %}
     {% endfor %}
