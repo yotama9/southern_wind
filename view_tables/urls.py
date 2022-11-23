@@ -10,7 +10,8 @@ urlpatterns = [
     path('register_to_table/',views.register_to_table, name='register-to-table'),
     path('create_adventure/',views.create_adventure, name='create-adventure'),
     path('create_evening/',views.create_evening, name='create-evening'),
-    path('evening_detail/<int:pk>',views.show_evenings_details,name='evening-detail')
+    path('evening_detail/<int:pk>',views.show_evenings_details,name='evening-detail'),
+    path('simple_register/',views.simple_register, name='register-to-evening'),
     ]
 
 

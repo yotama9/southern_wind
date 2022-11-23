@@ -4,6 +4,8 @@ import datetime
 
 
 
+    
+
 class Adventure(models.Model):
     title = models.CharField(max_length=200,help_text='Please enter the adventure\'s title')
     dm_name = models.CharField(max_length=200,help_text='Please enter your name or a display name')
@@ -26,6 +28,7 @@ class Adventure(models.Model):
         """Return the url to access a detail record for this book"""
         return reverse('adventure-detail', args=[str(self.id)])
 
+
     
 
 class Evening(models.Model):
@@ -43,7 +46,17 @@ class Evening(models.Model):
         date = '{}/{}/{}'.format(day,month,year)
         return date
 
-                            
+
+
+class SimpleRegistrant(models.Model):
+    name = models.CharField(max_length=20,help_text='Please enter your name. It doesn\'t have to be your real name, but try and remember it when you arrive in the evening')
+
+    evening = models.ForeignKey("Evening",on_delete=models.SET_NULL,null=True)
+
+    class Meta:
+        ordering = ['name']
+
+
 
 class Registrant(models.Model):
     name = models.CharField(max_length=200,help_text='Please enter the name so we can know you')
@@ -75,7 +88,8 @@ def get_available_tables(include_full=False):
                 out[a] = {'evening':e,'n_registrants':n_registrants}
     return out
 
-        
+
+
 
 
 def get_tables_for_evening(evening):

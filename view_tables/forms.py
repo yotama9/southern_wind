@@ -2,13 +2,23 @@ from django import forms
 
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
-from bootstrap_datepicker_plus import DatePickerInput
+from django.utils.translation import gettext_lazy as _
+from bootstrap_datepicker_plus.widgets import DatePickerInput
+
 from view_tables.models import Adventure,Registrant,Evening
 from view_tables.models import get_available_tables, get_available_evenings
 
 import datetime
 
+class simpleRegisterToAdventureForm(forms.Form):
+    player = forms.CharField(help_text="Name")
+
+    def clean(self):
+        p_name = self.cleaned_data['player']
+
+        #check if player name is not empty
+        if p_name.strip() == '':
+            raise ValidationError(_('Plesae provide a player name'))
 
 class registerToAdventureForm(forms.Form):
     player = forms.CharField(help_text="What is your name?")

@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from view_tables.models import Adventure, Registrant, Evening
+from view_tables.models import (Adventure,
+                                Registrant,
+                                Evening,
+                                SimpleRegistrant,)
 from view_tables.models import get_tables_for_evening, get_available_tables,get_available_evenings
 from django.views import generic
 from django.http import HttpResponseRedirect
@@ -12,7 +15,10 @@ import datetime
 from datetime import timedelta
 
 
-from view_tables.forms import registerToAdventureForm, CreateTableForm, CreateEveningForm
+from view_tables.forms import (registerToAdventureForm,
+                               CreateTableForm,
+                               CreateEveningForm,
+                               simpleRegisterToAdventureForm,)
 
 
 def index(request):
@@ -53,7 +59,36 @@ class RegistrantListView(generic.ListView):
     model = Registrant
     
 
+def simple_register(request):
+    """This is a function to collect user name (and later info) from user. It is simple at the moment. Should progress with more evening"""
+    evening_id = 1
+    if request.method == 'POST':
+        form = simpleRegisterToAdvnetureForm(request.POST)
+        if form.is_valid():
+            #create a new simple registrant and store it
+            player_name = form.cleaned_data['player_name']
+            evening = Evening.objects.get(id=evening_id)
+            reg = SimpleRegistrant(name=player_name,
+                                   evening=evening)
+            reg.save()
+            messages.success(request,'Thank you for registrating')
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            context = {
+                'form': form
+                }
+            return render(request,'view_tables/register_to_table.html',context=context) 
 
+        #if this is a GET (or any other method) create the default form
+    else:
+        form = simpleRegisterToAdventureForm()
+
+        context = {'form':form}
+
+        return render(request,'view_tables/simple_register.html',context=context)    
+            
+        
+    
 def register_to_table(request):
     #if this is a POST request ten process the form data
     if request.method == 'POST':
@@ -64,7 +99,6 @@ def register_to_table(request):
             #process the data in form.cleaned_data as required
             adventure_id = form.cleaned_data['adventure']
             adventure = Adventure.objects.filter(pk=adventure_id)[0]
-            print (form.cleaned_data)
             reg = Registrant(name=form.cleaned_data['player'],
                              has_character=form.cleaned_data['I_already_have_a_character'],
                              character_level=form.cleaned_data['character_level'],
@@ -87,7 +121,6 @@ def register_to_table(request):
         form = registerToAdventureForm()
 
         adventures = get_available_tables()
-        print(adventures)
 
         context = {'form':form,'adventure_list':adventures}
 
