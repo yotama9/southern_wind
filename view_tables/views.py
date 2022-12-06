@@ -63,13 +63,14 @@ def simple_register(request):
     """This is a function to collect user name (and later info) from user. It is simple at the moment. Should progress with more evening"""
     evening_id = 1
     if request.method == 'POST':
-        form = simpleRegisterToAdvnetureForm(request.POST)
+        form = simpleRegisterToAdventureForm(request.POST)
         if form.is_valid():
             #create a new simple registrant and store it
             player_name = form.cleaned_data['player_name']
             evening = Evening.objects.get(id=evening_id)
             reg = SimpleRegistrant(name=player_name,
                                    evening=evening)
+            print (reg)
             reg.save()
             messages.success(request,'Thank you for registrating')
             return HttpResponseRedirect(reverse('index'))
@@ -77,7 +78,7 @@ def simple_register(request):
             context = {
                 'form': form
                 }
-            return render(request,'view_tables/register_to_table.html',context=context) 
+            return render(request,'view_tables/simple_register.html',context=context) 
 
         #if this is a GET (or any other method) create the default form
     else:

@@ -2,3 +2,4 @@ view_tables/migrations/*
 SW_site/__pycache__/*
 view_tables/__pycache__/*
 SW_site/settings.py
+db.sqlite3

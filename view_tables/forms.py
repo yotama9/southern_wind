@@ -11,10 +11,10 @@ from view_tables.models import get_available_tables, get_available_evenings
 import datetime
 
 class simpleRegisterToAdventureForm(forms.Form):
-    player = forms.CharField(help_text="Name")
+    player_name = forms.CharField(help_text="Name")
 
     def clean(self):
-        p_name = self.cleaned_data['player']
+        p_name = self.cleaned_data['player_name']
 
         #check if player name is not empty
         if p_name.strip() == '':
