@@ -1,7 +1,9 @@
 from django.contrib import admin
-from .models import Adventure, Registrant,Evening
+from .models import Adventure, Registrant,Evening,SimpleRegistrant
 
 # Register your models here.
+
+admin.site.register(SimpleRegistrant)
 
 #admin.site.register(Adventure)
 @admin.register(Adventure)
