@@ -52,9 +52,13 @@ class SimpleRegistrant(models.Model):
     name = models.CharField(max_length=20,help_text='Please enter your name. It doesn\'t have to be your real name, but try and remember it when you arrive in the evening')
 
     evening = models.ForeignKey("Evening",on_delete=models.SET_NULL,null=True)
+    arrived = models.BooleanField("Present",null=True)
 
     class Meta:
         ordering = ['name']
+
+    def __str__(self):
+        return f'{self.name} ({self.evening})'
 
 
 

@@ -28,9 +28,8 @@ def index(request):
     num_evenings = len(upcoming_evenings)
     adventures = get_available_tables(include_full=True)
     num_adventures = len(adventures)
-    print (num_adventures)
-    print (adventures)
     num_registrants = sum([adventures[a]['n_registrants'] for a in adventures])
+    num_registrants = len(SimpleRegistrant.objects.all())
 
     context = {
         'num_evenings':num_evenings,
@@ -264,11 +263,13 @@ def show_evenings_details(request,pk):
     except Evening.DoesNotExist:
         raise Http404('Evening does not exist')
 
-    
+
+    registrants = SimpleRegistrant.objects.filter(evening=evening)
     context = {
         'date':evening.date,
         'tables':get_tables_for_evening(evening),
+        'registrants':registrants
     }
 
 
-    return render(request, 'view_tables/show_evening_details.html',context=context)
+    return render(request, 'view_tables/show_simple_evening.html',context=context)

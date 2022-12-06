@@ -1,0 +1,11 @@
+{% extends "generic.html" %}
+
+{% block content %}
+  <h1>Tables {{ date }}</h1>
+
+  <ul>
+    {% for player in registrants %}
+      <li> {{ player }} </li> 
+    {% endfor %}
+  </ul>
+{% endblock %}
