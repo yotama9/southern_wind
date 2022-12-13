@@ -1,11 +1,49 @@
 {% extends "generic.html" %}
 
-{% block content %}
-  <h1>Tables {{ date }}</h1>
 
-  <ul>
+
+
+
+
+
+{% block content %}
+  {% load static %}
+  <script src="{% static 'js/show_evening.js' %}"></script>
+  <h1>Tables {{ date }}</h1>
+  {% csrf_token %}
+  <table>
     {% for player in registrants %}
-      <li> {{ player }} </li> 
+      <tr>
+	<td>
+
+	  <input
+	    type="checkbox"
+	    player_id="{{ player.id }}"
+	    onclick="player_arrived(this)"
+	    {% if player.arrived %}
+	      checked=true
+	    {% endif %}
+	    >
+	    
+	</td>
+	<td>{{ player }}
+      </tr>
     {% endfor %}
-  </ul>
+  </table>
+
+  <div><hr></div>
+  <div>
+    Total registered:
+    <span id="tot_reg">
+      {{ tot_reg }}
+    </span>
+  </div>
+  <div>
+    Total arrived:
+    <span id='tot_arrived'>
+      {{ tot_arrived }}
+    </span>
+  </div>
+  <div><hr></div>
+  
 {% endblock %}

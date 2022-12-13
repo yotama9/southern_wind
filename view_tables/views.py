@@ -5,11 +5,12 @@ from view_tables.models import (Adventure,
                                 SimpleRegistrant,)
 from view_tables.models import get_tables_for_evening, get_available_tables,get_available_evenings
 from django.views import generic
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,JsonResponse
 from django.urls import reverse
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import permission_required
+from  django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 import datetime
 from datetime import timedelta
@@ -265,11 +266,36 @@ def show_evenings_details(request,pk):
 
 
     registrants = SimpleRegistrant.objects.filter(evening=evening)
+    total_registrants = registrants.count()
+    total_arrived = registrants.filter(arrived=True).count()
     context = {
         'date':evening.date,
         'tables':get_tables_for_evening(evening),
-        'registrants':registrants
+        'registrants':registrants,
+        'tot_reg':total_registrants,
+        'tot_arrived':total_arrived,
     }
 
 
     return render(request, 'view_tables/show_simple_evening.html',context=context)
+
+@permission_required('view_tables.view_evening')
+@csrf_protect
+def update_arrival(request,pk,checked):
+    registrant = SimpleRegistrant.objects.get(id=pk)
+    if (checked == 'true'):
+        registrant.arrived = True
+    elif (checked == 'false'):
+        registrant.arrived = False
+        
+    registrant.save()
+    regs = SimpleRegistrant.objects.filter(evening=registrant.evening)
+
+    context= {
+        'tot_regs':regs.count(),
+        'tot_arrived':regs.filter(arrived=True).count(),
+        }
+    
+    return JsonResponse(data=context)
+
+        
