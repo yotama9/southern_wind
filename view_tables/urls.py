@@ -11,7 +11,7 @@ urlpatterns = [
     path('create_adventure/',views.create_adventure, name='create-adventure'),
     path('create_evening/',views.create_evening, name='create-evening'),
     path('evening_detail/<int:pk>',views.show_evenings_details,name='evening-detail'),
-    path('simple_register/',views.simple_register, name='register-to-evening'),
+    path('simple_register/',views.simple_register, name='register-to-evening-simple'),
     path('update_arrival/<int:pk>/<str:checked>',
          views.update_arrival,
          name='update-arrival'),
