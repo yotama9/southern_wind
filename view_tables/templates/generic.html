@@ -32,7 +32,7 @@
 	    {% if perms.view_tables.add_adventure %}
 	      <li><a href="{% url 'create-adventure' %}">Add adventure</a></li>
 	    {% endif %}
-	    <li><a href="{%url 'register-to-table' %}">Register to our next evening</a></li>
+	    <li><a href="{%url 'register-to-evening-simple' %}">Register to our next evening</a></li>
 	    {% if user.is_authenticated %}
 	      <li>Logged in as: {{ user.get_username }}</li>
    	      <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>

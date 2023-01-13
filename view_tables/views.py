@@ -68,9 +68,11 @@ def simple_register(request):
             #create a new simple registrant and store it
             player_name = form.cleaned_data['player_name']
             evening = Evening.objects.get(id=evening_id)
+            willing_for_non_dnd = form.cleaned_data['non_DnD']
             reg = SimpleRegistrant(name=player_name,
-                                   evening=evening)
-            print (reg)
+                                   evening=evening,
+                                   willing_for_non_dnd=willing_for_non_dnd,)
+
             reg.save()
             messages.success(request,'Thank you for registrating')
             return HttpResponseRedirect(reverse('index'))

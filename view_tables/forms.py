@@ -12,6 +12,7 @@ import datetime
 
 class simpleRegisterToAdventureForm(forms.Form):
     player_name = forms.CharField(help_text="Name")
+    non_DnD = forms.BooleanField(required=False)
 
     def clean(self):
         p_name = self.cleaned_data['player_name']
