@@ -70,6 +70,13 @@
       {% endif %}
       </ul>
     </nav>
+    {% if user.is_authenticated %}
+      <nav>
+	<ul class="nav-list">
+    	  <li><a href="{% url 'show-evenings' %}">View evenings</a></li>
+	</ul>
+      </nav>
+    {% endif %}
     <div class="container flex-column--left">
       {% if messages %}
 	<ul class="messages">

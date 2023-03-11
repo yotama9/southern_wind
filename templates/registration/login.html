@@ -16,13 +16,14 @@
     {% endif %}
   {% endif %}
 
-  {% csrf_token %}
+
   <div class="container">
     <section class="section-form">
       <figure class="flex--center">
 	<img class='logo' src="{% static 'css/images/SW_logo_transparent.png' %}">
       </figure>
       <form method="post" action="{% url 'login' %}">
+	{% csrf_token %}
         <div>
           <h2 class="form-header">Login</h2>
           <div class="input-container">
@@ -45,8 +46,6 @@
     </section>
   </div>
     
-
-
 
 {% endblock %}
 
