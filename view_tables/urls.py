@@ -15,6 +15,7 @@ urlpatterns = [
     path('update_arrival/<int:pk>/<str:checked>',
          views.update_arrival,
          name='update-arrival'),
+    path('test',views.test,name='test')
     ]
 
 

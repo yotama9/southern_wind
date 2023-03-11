@@ -3,39 +3,53 @@
 {% load static %}
 {% block extrahead %}
   <script src="{% static 'js/register_to_table.js' %}"></script>
+  <script src="{% static 'js/htmx.min.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-  <h1>Register to the next Southern Wind event</h1>
-  <table><tbody>
-      <form action="" method="post">
+  <script src="https://unpkg.com/htmx.org@1.1.0"></script>
+  <div class='container'>
+    <section class='section-form'>
+      <figure class='flex--center'>
+	<img class='logo' src="{% static 'css/images/SW_logo_transparent.png' %}">
+      </figure>
+      <form action="" method="post" id='form'>
 	{% csrf_token %}
-	<table>
-	  <tr>
-	    <td>
-	      <label for="{{ form.player_name.id_for_label }}">Player name:</label>
-	    </td>
-	    <td>
-	      {{ form.player_name }}
-	    </td>
-	  </tr>
-	  <tr>
-	    <td>
-	      Are you interested in playing <br> systems other than D&amp;D? 
-	    <td>
-	      <span style="padding-left:5px;">
-	      {{ form.non_DnD }}
-	    </td>
-	  </tr>
-	</table>
-
+	<div>
+	  <h1 class='form-header'>Register to our next event</h1>
+	  <div class="input-container">
+	    <label
+	      class="input-label"
+	      for="{{ form.player_name.id_for_label }}">
+	      Player name
+	    </label>
+	    {{ form.player_name }}
+	  </div>
+	  <div class='checkbox-container'>
+	    {{ form.non_DnD }}
+	    <label
+	      class='input-label input-label-checkbox'
+	      for='{{ form.non_DnD.id_for_label }}'>
+	      Are you interested in playing systems other than D&amp;D?
+	    </label>
+	  </div>
+	</div>
+	
+	  
 	<div onmouseover='check_fields()'>
-	  <br>
-	  <input id ='submit' type="submit" value="Submit">
+	  <button
+	    class='register-button'
+	    id='submit'
+	    type="submit"
+	    value="Submit">
+	    Register
+	  </button>
+	  
 	</div>
       </form>
-    </tbody>
-</tabkle>
+    </section>
+  </div>
+
 
 <p class='error' id='error'></p>
 {% endblock %}

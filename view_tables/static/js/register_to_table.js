@@ -1,4 +1,14 @@
+$(document).ready(function(){
+    $('#form').ajaxForm(function(){
+	$("#submit").addClass('button--clicked').removeClass('register-button');
+	$("#submit").text('Thank you');
+    });
+});
+
+
+
 function check_fields(){
+    return;
     document.getElementById('submit').removeAttribute('disabled');
 
     var error = "";
@@ -53,3 +63,5 @@ function toggle_character_level_field(){
 	document.getElementById('id_character_level').value = '';
     }
 }
+
+

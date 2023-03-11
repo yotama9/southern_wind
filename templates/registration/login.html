@@ -1,4 +1,6 @@
 {% extends "generic.html" %}
+{% load static %}
+
 
 {% block content %}
 
@@ -9,31 +11,45 @@
   {% if next %}
     {% if user.is_authenticated %}
       <p>Your account doesn&#39;t have access to this page. To proceed, please login with an acount that has access.</p>
-    {% else %}
+    {% elif 0 %}
       <p>Please login to see this page.</p>
     {% endif %}
   {% endif %}
 
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-	<td>{{ form.username.label_tag }}</td>
-	<td>{{ form.username }}</td>
-      </tr>
-      <tr>
-	<td>{{ form.password.label_tag }}</td>
-	<td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="login">
-    <input type="hidden" name="next" value="{{ next }}">
-  </form>
+  {% csrf_token %}
+  <div class="container">
+    <section class="section-form">
+      <figure class="flex--center">
+	<img class='logo' src="{% static 'css/images/SW_logo_transparent.png' %}">
+      </figure>
+      <form method="post" action="{% url 'login' %}">
+        <div>
+          <h2 class="form-header">Login</h2>
+          <div class="input-container">
+            <label for="username" class="input-label">Username:</label>
+	    {{ form.username }}
+          </div>
+          <div class="input-container">
+            <label for="password" class="input-label">Password:</label>
+	    {{ form.password }}
+          </div>
+        </div>
+	<button id="login-button" class="button">Login</button>
+        <a
+	  href="{% url 'password_reset' %}"
+	  id="login-status"
+	  class="login-status">
+	  Forgot password?
+	</a>
+      </form>
+    </section>
+  </div>
+    
 
-  {# Assumes you setup the password_reset view in your URLconf #}
-  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
 
 {% endblock %}
+
 
       
     

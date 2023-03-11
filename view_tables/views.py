@@ -36,6 +36,7 @@ def index(request):
         'num_evenings':num_evenings,
         'num_adventures':num_adventures,
         'num_registrants':num_registrants,
+        'active_page':'index',
     }
 
     #render the HTML template index.html
@@ -78,7 +79,8 @@ def simple_register(request):
             return HttpResponseRedirect(reverse('index'))
         else:
             context = {
-                'form': form
+                'form': form,
+                'active_page':'register'
                 }
             return render(request,'view_tables/simple_register.html',context=context) 
 
@@ -86,7 +88,9 @@ def simple_register(request):
     else:
         form = simpleRegisterToAdventureForm()
 
-        context = {'form':form}
+        context = {'form':form,
+                   'active_page':'register'
+                   }
 
         return render(request,'view_tables/simple_register.html',context=context)    
             
@@ -115,7 +119,8 @@ def register_to_table(request):
             return HttpResponseRedirect(reverse('index'))
         else:
             context = {
-                'form': form
+                'form': form,
+                'active_page':'register'
                 }
             return render(request,'view_tables/register_to_table.html',context=context) 
 
@@ -125,7 +130,9 @@ def register_to_table(request):
 
         adventures = get_available_tables()
 
-        context = {'form':form,'adventure_list':adventures}
+        context = {'form':form,
+                   'active_page':'register',
+                   'adventure_list':adventures}
 
         return render(request,'view_tables/register_to_table.html',context=context)
 
@@ -301,3 +308,11 @@ def update_arrival(request,pk,checked):
     return JsonResponse(data=context)
 
         
+
+def test(request):
+    print ("it works")
+
+    context = {'succes':True}
+    return render(request, 'view_tables/partials/register_result.html',context=context)
+
+
