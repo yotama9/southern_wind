@@ -62,7 +62,7 @@ class RegistrantListView(generic.ListView):
 
 def simple_register(request):
     """This is a function to collect user name (and later info) from user. It is simple at the moment. Should progress with more evening"""
-    evening_id = 4
+    evening_id = 5
     if request.method == 'POST':
         form = simpleRegisterToAdventureForm(request.POST)
         if form.is_valid():
