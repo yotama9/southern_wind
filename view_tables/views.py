@@ -73,7 +73,7 @@ def simple_register(request):
             today = datetime.date.today()
             reg = SimpleRegistrant(name=player_name,
                                    evening=evening,
-                                   register_dat=today,
+                                   register_date=today,
                                    willing_for_non_dnd=willing_for_non_dnd,)
 
             reg.save()
