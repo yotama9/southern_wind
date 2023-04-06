@@ -70,8 +70,10 @@ def simple_register(request):
             player_name = form.cleaned_data['player_name']
             evening = Evening.objects.get(id=evening_id)
             willing_for_non_dnd = form.cleaned_data['non_DnD']
+            today = datetime.date.today()
             reg = SimpleRegistrant(name=player_name,
                                    evening=evening,
+                                   register_dat=today,
                                    willing_for_non_dnd=willing_for_non_dnd,)
 
             reg.save()

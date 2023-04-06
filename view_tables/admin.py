@@ -3,7 +3,7 @@ from .models import Adventure, Registrant,Evening,SimpleRegistrant
 
 # Register your models here.
 
-admin.site.register(SimpleRegistrant)
+
 
 #admin.site.register(Adventure)
 @admin.register(Adventure)
@@ -23,3 +23,11 @@ class RegistrantAdmin(admin.ModelAdmin):
 class RegisterEvening(admin.ModelAdmin):
     list_display = ['date']
 
+
+
+class SimpleRegistrantAdmin(admin.ModelAdmin):
+    readonly_fields = ('id',)
+    list_display = ('name', 'id', 'evening','register_date','arrived')
+    fields = ['name', 'evening', 'register_date', 'arrived']
+    
+admin.site.register(SimpleRegistrant,SimpleRegistrantAdmin)

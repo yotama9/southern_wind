@@ -2,8 +2,11 @@ $(document).ready(function(){
     $('#form').ajaxForm(function(){
 	$("#submit").addClass('button--clicked').removeClass('register-button');
 	$("#submit").text('Thank you');
+	
     });
+    
 });
+
 
 
 

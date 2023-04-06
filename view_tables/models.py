@@ -53,6 +53,7 @@ class SimpleRegistrant(models.Model):
 
     evening = models.ForeignKey("Evening",on_delete=models.SET_NULL,null=True)
     arrived = models.BooleanField("Present",null=True)
+    register_date = models.DateField("Date",null=True)
 
     willing_for_non_dnd = models.BooleanField('Are you interested in methods other than D&D?', null=True)
 
