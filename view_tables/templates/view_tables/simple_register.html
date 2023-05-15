@@ -2,7 +2,10 @@
 
 {% load static %}
 {% block extrahead %}
-  <script src="{% static 'js/register_to_table.js' %}"></script>
+  <script
+    type='module'
+    src="{% static 'js/register_to_table.js' %}">
+  </script>
   <script src="{% static 'js/htmx.min.js' %}"></script>
 {% endblock %}
 
@@ -36,12 +39,13 @@
 	</div>
 	
 	  
-	<div onmouseover='check_fields()'>
+	<div>
 	  <button
 	    class='register-button'
 	    id='submit'
 	    type="submit"
-	    value="Submit">
+	    value="Submit"
+	    >
 	    Register
 	  </button>
 	  

@@ -1,11 +1,54 @@
+import { get_csrf } from './module.js';
+
+
 $(document).ready(function(){
-    $('#form').ajaxForm(function(){
-	$("#submit").addClass('button--clicked').removeClass('register-button');
-	$("#submit").text('Thank you');
-	
+    $('#form').on('submit', function(e) {
+	e.preventDefault();
+	submit_register(e);
+    });
+
+    $("#form").on('mouseover',function(e){
+	check_fields()
     });
     
+    //$('#form').ajaxForm(function(){
+    //$("#submit").addClass('button--clicked').removeClass('register-button');
+    //$("#submit").text('Thank you');
+    //$("#submit").prop('disabled','true');
+//});
+    
 });
+
+function submit_register(e){
+    e.preventDefault();
+
+    $("#submit").prop('disabled','true');
+    console.log("not submitted");
+    //creating the ajax call
+    var url = window.location.pathname;
+    console.log(url);
+    var name = $('#id_player_name').val();
+    var dnd = $('#id_non_DnD').val();
+    $.ajax({
+	url:url,
+	type:'POST',
+	data: {
+	    player_name : name,
+	    non_dnd : dnd,
+	},
+	headers:{
+	    'X-CSRFToken':get_csrf(),
+	},
+	success: function(json_in){
+	    $("#submit").addClass('button--clicked').removeClass('register-button');
+	    $("#submit").text('Thank you');
+	    $("#submit").prop('disabled','true');
+	},
+	error : function(xhr,errmsg,err) {
+	    console.log('error');
+	},
+    })
+}
 
 
 
@@ -65,6 +108,12 @@ function toggle_character_level_field(){
 	document.getElementById('id_character_name').setAttribute('disabled','true');
 	document.getElementById('id_character_level').value = '';
     }
+}
+
+
+
+function isFormHtml5Valid(form){
+    console.log(form);
 }
 
 

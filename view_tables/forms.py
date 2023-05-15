@@ -5,21 +5,43 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from bootstrap_datepicker_plus.widgets import DatePickerInput
 
-from view_tables.models import Adventure,Registrant,Evening
-from view_tables.models import get_available_tables, get_available_evenings
+from view_tables.models import (Adventure,
+                                Registrant,
+                                Evening,
+                                get_available_tables,
+                                get_available_evenings,
+                                SimpleRegistrant)
 
 import datetime
 
 class simpleRegisterToAdventureForm(forms.Form):
+    def __init__(self, evening_id, *args, **kwargs):
+        self.evening_id = evening_id
+        super(simpleRegisterToAdventureForm,self).__init__(*args,**kwargs)
+              
     player_name = forms.CharField(help_text="Name")
     non_DnD = forms.BooleanField(required=False)
 
     def clean(self):
-        p_name = self.cleaned_data['player_name']
+        p_name = self.cleaned_data['player_name'].strip()
 
         #check if player name is not empty
-        if p_name.strip() == '':
+        if p_name == '':
             raise ValidationError(_('Plesae provide a player name'))
+        regs = SimpleRegistrant.objects.filter(
+            evening_id = self.evening_id,
+            name__iexact = p_name,
+        )
+
+        
+        if len(regs)>0:
+            print ('raising')
+            print ('the check for recouring names is not implemented yet')
+            #raise ValidationError(_('A player with that name is registered already. Pleae use a different name'))
+               
+                
+                
+        #check if name 
 
 class registerToAdventureForm(forms.Form):
     player = forms.CharField(help_text="What is your name?")

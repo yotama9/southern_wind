@@ -62,9 +62,9 @@ class RegistrantListView(generic.ListView):
 
 def simple_register(request):
     """This is a function to collect user name (and later info) from user. It is simple at the moment. Should progress with more evening"""
-    evening_id = 5
+    evening_id = 6
     if request.method == 'POST':
-        form = simpleRegisterToAdventureForm(request.POST)
+        form = simpleRegisterToAdventureForm(evening_id,request.POST)
         if form.is_valid():
             #create a new simple registrant and store it
             player_name = form.cleaned_data['player_name']
@@ -80,6 +80,7 @@ def simple_register(request):
             messages.success(request,'Thank you for registrating')
             return HttpResponseRedirect(reverse('index'))
         else:
+            print ('failed')
             context = {
                 'form': form,
                 'active_page':'register'
@@ -88,7 +89,7 @@ def simple_register(request):
 
         #if this is a GET (or any other method) create the default form
     else:
-        form = simpleRegisterToAdventureForm()
+        form = simpleRegisterToAdventureForm(evening_id)
 
         context = {'form':form,
                    'active_page':'register'
